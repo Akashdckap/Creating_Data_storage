@@ -26,9 +26,30 @@ class userController{
     public function createTable($table){
         $dbName = $table['database'];
         $tableName = $table['tableName'];
-        $columnName = $table['columnName'];
-        $dataType = $table['dataType'];
+        $columnName = count($table['columnName']);
         
-        $this->userModel->createNewTable($dbName,$tableName,$columnName,$dataType);
+        $this->userModel->createNewTable($dbName,$tableName);
+        for($i=0;$i<$columnName;$i++){
+            $this->userModel->addColumns($dbName,$tableName,$table['columnName'][$i],$table['dataTypes'][$i]);
+        }
+        header("location:/");
     }
+    public function getInsertValues(){
+        $Databases = $this->userModel->showDatabase();
+        require "View/InsertIntotable.php";
+    }
+    public function getTableList($dbNames){
+        $dbName = $dbNames['database'];
+        $_SESSION['database']=$dbName;
+        $tables = $this->userModel->getTableNames($dbName);
+        require "View/InsertIntotable.php";
+    }
+    public function getColumn($getDatas){
+        $tableName = $getDatas['tablesList'];
+        $dbName = $getDatas['dataBase'];
+        $getedColumns = $this->userModel->getColumns($tableName,$dbName);
+        print_r($getedColumns);
+        require "View/InsertIntotable.php";
+    }
+
 }

@@ -1,6 +1,5 @@
 <?php
 
-require 'Controller/userController.php';
 class router
 {
     public $router = [];
@@ -65,6 +64,15 @@ class router
                             break;
                         case 'createTable':
                             $this->controller->createTable($_POST);
+                            break;
+                        case 'getInsertIntoTable':
+                            $this->controller->getInsertValues();
+                            break;
+                        case 'getTableListFirstAndInsertValues':
+                            $this->controller->getTableList($_POST);
+                            break;
+                        case 'selectiveColumn':
+                            $this->controller->getColumn($_POST);
                             break;
                     }
                 } else {
